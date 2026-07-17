@@ -1,0 +1,9 @@
+[
+  { "id": 1, "name": "Jothipriya", "role": "lead", "password": "jothi123", "projects": ["Norton Phase 2", "IOM", "RFC Migration", "EMS Automation", "DMS Automation"] },
+  { "id": 2, "name": "Vimala", "role": "member", "password": "vimala123", "projects": ["Digi App", "Norton Phase 2", "RFC Migration"] },
+  { "id": 3, "name": "Sureshrajendran", "role": "member", "password": "suresh123", "projects": ["Norton Phase 2", "DMS Automation", "RFC Migration"] },
+  { "id": 4, "name": "Talent", "role": "trainee", "password": "talent123", "projects": ["Learning", "Norton Phase 2", "RFC Migration"] },
+  { "id": 5, "name": "Thillai", "role": "manager", "password": "thillai123", "projects": [] },
+  { "id": 6, "name": "Sureshkannan", "role": "manager", "password": "sureshk123", "projects": [] },
+  { "id": 7, "name": "Nivedhitha", "role": "manager", "password": "nivedhitha123", "projects": [] }
+]
