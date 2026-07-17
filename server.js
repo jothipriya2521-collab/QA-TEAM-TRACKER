@@ -167,7 +167,7 @@ app.get('/api/email-report', async (req, res) => {
   const entries = await db.collection('entries').find({ date }).toArray();
   const users = await db.collection('users').find({}).toArray();
   let email = `Hi Nivedita Avula (TVS Digital),\n\nStatus Update : ${date}\n\n`;
-  users.forEach(u => { const me = entries.filter(e => e.member === u.name); if (me.length > 0) { email += `${u.name}:\n`; me.forEach(e => { email += `\u2022 ${e.task} (${e.project} \u2014 ${e.hours}h)${e.jira ? ' [' + e.jira + ']' : ''}\n`; }); email += '\n'; } });
+  users.forEach(u => { const me = entries.filter(e => e.member === u.name); if (me.length > 0) { email += `${u.name}:\n`; me.forEach(e => { const hrs=Math.floor(e.hours);const mins=Math.round((e.hours-hrs)*60);let timeStr='';if(hrs>0&&mins>0)timeStr=hrs+'h '+mins+'m';else if(hrs>0)timeStr=hrs+'h';else timeStr=mins+'m'; email += `\u2022 ${e.task} (${e.project} \u2014 ${timeStr})\n`; }); email += '\n'; } });
   email += 'Thanks & Regards,\nJothipriya Narayanasamy\nQA Lead \u2014 CPShopBuy QA';
   res.json({ email });
 });
