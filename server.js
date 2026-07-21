@@ -164,11 +164,22 @@ app.get('/api/weekly', async (req, res) => {
 // Email report
 app.get('/api/email-report', async (req, res) => {
   const date = req.query.date || getISTDate();
+  const loggedInUser = req.query.user || 'Jothipriya';
   const entries = await db.collection('entries').find({ date }).toArray();
   const users = await db.collection('users').find({}).toArray();
+  
+  // Signature mapping based on logged-in user
+  const signatures = {
+    'Jothipriya': 'Thanks & Regards,\nJothipriya Narayanasamy\nQA Lead \u2014 CPShopBuy QA',
+    'Thillai': 'Thanks & Regards,\nThillai Nayagam\nManager \u2014 CPShopBuy QA',
+    'Sureshkannan': 'Thanks & Regards,\nSuresh Kannan\nManager \u2014 CPShopBuy QA',
+    'Nivedhitha': 'Thanks & Regards,\nNivedhitha Avula\nManager \u2014 TVS Digital'
+  };
+  const signature = signatures[loggedInUser] || `Thanks & Regards,\n${loggedInUser}`;
+  
   let email = `Hi Nivedita Avula (TVS Digital),\n\nStatus Update : ${date}\n\n`;
   users.forEach(u => { const me = entries.filter(e => e.member === u.name); if (me.length > 0) { email += `${u.name}:\n`; me.forEach(e => { const hrs=Math.floor(e.hours);const mins=Math.round((e.hours-hrs)*60);let timeStr='';if(hrs>0&&mins>0)timeStr=hrs+'h '+mins+'m';else if(hrs>0)timeStr=hrs+'h';else timeStr=mins+'m'; email += `\u2022 ${e.task} (${e.project} \u2014 ${timeStr})\n`; }); email += '\n'; } });
-  email += 'Thanks & Regards,\nJothipriya Narayanasamy\nQA Lead \u2014 CPShopBuy QA';
+  email += signature;
   res.json({ email });
 });
 
